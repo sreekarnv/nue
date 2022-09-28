@@ -1,0 +1,8 @@
+query LoggedInUser {
+	user: me {
+		_id
+		name
+		email
+		__typename
+	}
+}

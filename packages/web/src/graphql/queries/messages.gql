@@ -1,0 +1,19 @@
+query Messages($user: String!) {
+	receiver: user(_id: $user) {
+		_id
+		name
+		__typename
+	}
+	messages(user: $user) {
+		_id
+		sender {
+			_id
+		}
+		receiver {
+			_id
+		}
+		text
+		createdAt
+		__typename
+	}
+}

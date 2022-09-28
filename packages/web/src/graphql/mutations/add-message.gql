@@ -1,0 +1,14 @@
+mutation AddMessage($receiver: String!, $text: String!) {
+	addMessage(receiver: $receiver, text: $text) {
+		_id
+		sender {
+			_id
+		}
+		receiver {
+			_id
+		}
+		text
+		createdAt
+		__typename
+	}
+}

@@ -1,0 +1,16 @@
+subscription NewMessage {
+	message: newMessage {
+		_id
+		text
+		messageType
+		sender {
+			_id
+		}
+		receiver {
+			_id
+		}
+		createdAt
+		updatedAt
+		__typename
+	}
+}
