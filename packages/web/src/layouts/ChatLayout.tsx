@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { HiOutlineLogout } from 'react-icons/hi';
@@ -16,10 +17,14 @@ import {
 interface ChatLayoutProps {
 	children: React.ReactNode;
 	header?: React.ReactNode;
+	showSidebar?: boolean;
+	toggleSidebar?: () => void;
 }
 
 const ChatLayout: React.FC<ChatLayoutProps> = ({
 	children,
+	showSidebar,
+	toggleSidebar,
 	header = <></>,
 }) => {
 	const router = useRouter();
@@ -54,10 +59,25 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 
 	return (
 		<>
+			{showSidebar && (
+				<div
+					onClick={() => toggleSidebar?.()}
+					className={clsx([
+						'bg-black opacity-80 h-screen w-screen fixed z-10 md:hidden block',
+						showSidebar ? 'visible' : 'visible-none',
+						'transition-all duration-300 ease-out',
+					])}
+				/>
+			)}
 			<audio ref={audioRef} src={'/notification.wav'} />
 			<div className='h-screen  bg-gray-100 flex items-center justify-center'>
-				<div className='bg-white rounded overflow-hidden w-[80vw] h-[80vh] flex shadow-lg'>
-					<div className='basis-[20%]'>
+				<div className='bg-white rounded overflow-hidden w-[100vw] h-[100vh] xl:w-[80vw] xl:h-[80vh] flex shadow-lg'>
+					<div
+						className={clsx(
+							'fixed z-20 h-full bg-white w-[70%] md:translate-x-0 md:static md:block basis-[40%] xl:basis-[20%]',
+							showSidebar ? 'translate-x-0' : 'translate-x-[-100vw]',
+							'transition-transform duration-300 ease-out'
+						)}>
 						<header className='border-b-2 py-4 px-3 flex items-center justify-between'>
 							<div className='flex items-center gap-x-3'>
 								<Avatar
@@ -79,9 +99,9 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 							))}
 						</ul>
 					</div>
-					<div className='basis-[80%] flex flex-col justify-between border-l-2'>
+					<div className='basis-[100%] md:basis-[80%] flex flex-col justify-between border-l-2'>
 						{router.query.id && (
-							<header className='border-b-2 py-4 px-4'>
+							<header className='border-b-2 py-4 md:px-4 px-2'>
 								<>{header}</>
 							</header>
 						)}
@@ -112,8 +132,8 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 										className='input m-0 p-0 w-full outline-none focus:outline-none px-3'
 									/>
 									<button className='btn btn-primary'>
-										Send
-										<MdSend className='ml-3 h-5 w-5' />
+										<span className='md:block hidden'>Send</span>
+										<MdSend className='md:ml-3 h-5 w-5' />
 									</button>
 								</form>
 							</footer>

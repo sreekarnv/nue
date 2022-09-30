@@ -12,7 +12,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, alt }) => {
 		<>
 			<R.Avatar
 				className={clsx([
-					'shadow cursor-pointer inline-flex items-center justify-center align-middle overflow-hidden select-none w-[45px] h-[45px] rounded-full',
+					'shadow cursor-pointer inline-flex items-center justify-center align-middle overflow-hidden select-none w-[40px] h-[40px] md:w-[45px] md:h-[45px] rounded-full',
 					src ? 'bg-transparent' : 'bg-blue-600',
 				])}>
 				<R.AvatarImage src={src} alt={alt} />

@@ -2,6 +2,7 @@ import React from 'react';
 import { useGithubLoginMutation } from '../../graphql';
 import OauthPopup from 'react-oauth-popup';
 import clsx from 'clsx';
+import { BsGithub } from 'react-icons/bs';
 
 interface LoginWithGithubProps {}
 
@@ -23,7 +24,8 @@ const LoginWithGithub: React.FC<LoginWithGithubProps> = ({}) => {
 				onCode={onCode}
 				onClose={() => {}}>
 				<button className={clsx(['btn btn-primary', fetching && 'loading'])}>
-					Continue with Github
+					<BsGithub size={22} />
+					<span className='ml-3'>Continue with Github</span>
 				</button>
 			</OauthPopup>
 		</>

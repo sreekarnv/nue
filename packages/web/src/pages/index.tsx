@@ -8,6 +8,7 @@ import LoginForm from '../components/auth/LoginForm';
 import SignupForm from '../components/auth/SignupForm';
 import LoginWithGithub from '../components/auth/LoginWithGithub';
 import Seo from '../components/shared/Seo';
+import Loader from '../components/shared/ui/Loader';
 
 const HomePage: NextPage = ({}) => {
 	const router = useRouter();
@@ -19,17 +20,12 @@ const HomePage: NextPage = ({}) => {
 		}
 	}, [data, router]);
 
-	if (fetchingUser)
-		return (
-			<>
-				<div>Loading...</div>
-			</>
-		);
+	if (fetchingUser) return <Loader fullScreen={true} />;
 
 	return (
 		<>
 			<Seo />
-			<div className='max-w-xl mx-auto mt-24 px-4 md:px-0'>
+			<div className='max-w-xl mx-auto mt-10 md:mt-24 px-4 md:px-0'>
 				<Tabs.Root defaultValue='login'>
 					<Tabs.List
 						className='tabs flex justify-center'
