@@ -11,6 +11,9 @@ import { Session } from './models/session.model';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import xss from 'xss-clean';
+import mongoSanitize from 'express-mongo-sanitize';
+import helmet from 'helmet';
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
@@ -20,6 +23,8 @@ console.log(`NODE_ENV=${process.env.NODE_ENV}`);
 
 const app = express();
 
+app.enable('trust proxy');
+
 app.use(
 	cors({
 		credentials: true,
@@ -28,13 +33,26 @@ app.use(
 );
 
 app.use(
+	helmet({
+		hidePoweredBy: true,
+		crossOriginResourcePolicy: {
+			policy: 'cross-origin',
+		},
+	})
+);
+
+app.use((req) =>
 	session({
 		store: MongoStore.create({ mongoUrl: process.env.MONGO_URI! }),
 		secret: process.env.SESSION_SECRET!,
 		cookie: {
 			httpOnly: true,
-			secure: false,
+			secure:
+				process.env.NODE_ENV === 'production'
+					? req.secure || req.headers['x-forwarded-proto'] === 'https'
+					: false,
 			maxAge: 1000 * 60 * 60 * 24 * 7,
+			sameSite: 'none',
 		},
 		name: 'auth.token',
 		saveUninitialized: false,
@@ -53,6 +71,9 @@ app.use(
 		}),
 		context: ({ req, res }) => ({ req, res }),
 	});
+
+	app.use(mongoSanitize());
+	app.use(xss());
 
 	app.get('/', (_, res) => {
 		res.redirect('/graphql');

@@ -2552,8 +2552,10 @@ __metadata:
     connect-mongo: ^4.6.0
     cors: ^2.8.5
     express: ^4.18.1
+    express-mongo-sanitize: ^2.2.0
     express-session: ^1.17.3
     graphql: ^15.2.0
+    helmet: ^6.0.0
     mongoose: ^6.6.1
     morgan: ^1.10.0
     nodemon: ^2.0.20
@@ -2562,6 +2564,7 @@ __metadata:
     rimraf: ^3.0.2
     type-graphql: ^1.1.1
     typescript: ^4.8.3
+    xss-clean: ^0.1.1
   languageName: unknown
   linkType: soft
 
@@ -5809,6 +5812,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"express-mongo-sanitize@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "express-mongo-sanitize@npm:2.2.0"
+  checksum: d7a3b7c1d3bf856cd50a74b3a15724d1319c8b4922eb4d106abd4721f98281f716aae37e40729d22b5e706c04a0ff7beb4b89a661d81385777b6ff49b925e736
+  languageName: node
+  linkType: hard
+
 "express-session@npm:^1.17.3":
   version: 1.17.3
   resolution: "express-session@npm:1.17.3"
@@ -6699,6 +6709,13 @@ __metadata:
     capital-case: ^1.0.4
     tslib: ^2.0.3
   checksum: 571c83eeb25e8130d172218712f807c0b96d62b020981400bccc1503a7cf14b09b8b10498a962d2739eccf231d950e3848ba7d420b58a6acd2f9283439546cd9
+  languageName: node
+  linkType: hard
+
+"helmet@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "helmet@npm:6.0.0"
+  checksum: 0dd89d5b77c5334e815f5d29376ca7af0ad1007136890f497be3455d9ed9734e7203e13d9931e29e4d2ced1c632c52440f16d2a02e8835fd8b8706a12052faad
   languageName: node
   linkType: hard
 
@@ -11884,6 +11901,22 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 23aa0f021b2eb65c108ec4c3e08c0d81ba01f82b500432dfe327fd6be36079c1d81fdb0eac6464d2a0eb49904d34a9ab8c59619d673fa07b8346f83aeb0cbf12
+  languageName: node
+  linkType: hard
+
+"xss-clean@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "xss-clean@npm:0.1.1"
+  dependencies:
+    xss-filters: 1.2.6
+  checksum: 215e097b0766e30a0e3eac0b89e03491f2816e79fbcbf6d5357c9d5ae53051419ee3df79953aa4208f52fe240130730ae9e67e013c457615d5dcd12f1d8d0576
+  languageName: node
+  linkType: hard
+
+"xss-filters@npm:1.2.6":
+  version: 1.2.6
+  resolution: "xss-filters@npm:1.2.6"
+  checksum: 7b70b8c9ad445b36db91855c7e51f8f282883266aa6ff0787246c25c2f6de243989d3f9cd0ee4881891be6e1043f1429f6db5bf61debcaa3e2ac08215cf436aa
   languageName: node
   linkType: hard
 

@@ -33,8 +33,6 @@ export const createUrqlClient = (
 				updates: {
 					Subscription: {
 						newMessage: (result, _, cache) => {
-							console.log({ result });
-
 							const sender: Partial<User> = (result?.message as any).sender;
 
 							const cachedMessagesData = (cache.readQuery({
