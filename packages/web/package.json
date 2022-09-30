@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "generate:sitemap": "node ./scripts/generate-sitemap.js",
+    "generate:robotstxt": "node ./scripts/generate-robots-txt.js",
+    "generate": "npm-run-all generate:sitemap generate:robotstxt",
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && yarn generate",
     "start": "next start",
     "lint": "next lint",
     "codegen": "graphql-codegen --config codegen.yml"
@@ -17,6 +20,7 @@
     "clsx": "^1.2.1",
     "daisyui": "^2.31.0",
     "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
     "graphql": "^15.2.0",
     "next": "12.3.1",
     "next-urql": "^4.0.0",
@@ -40,6 +44,8 @@
     "autoprefixer": "^10.4.12",
     "eslint": "8.24.0",
     "eslint-config-next": "12.3.1",
+    "nextjs-sitemap-generator": "^1.3.1",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8",
     "typescript": "4.8.3"

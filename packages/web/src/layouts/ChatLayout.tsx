@@ -26,7 +26,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 	children,
 	showSidebar,
 	toggleSidebar,
-	sidebarWidth = 'w-70%',
+	sidebarWidth = 'w-[70%]',
 	header = <></>,
 }) => {
 	const router = useRouter();
@@ -87,7 +87,12 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 									src={data?.user?.photo || ''}
 									alt={data?.user?.name || ''}
 								/>
-								<span className='font-semibold line-3'>{data?.user?.name}</span>
+								<span className='font-semibold line-3'>
+									<span className='hidden md:block'>{data?.user?.name}</span>
+									<span className='md:hidden'>
+										{data?.user?.name.split(' ')[0]}
+									</span>
+								</span>
 							</div>
 							<button
 								onClick={() => logout({})}

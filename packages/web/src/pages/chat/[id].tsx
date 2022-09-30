@@ -74,7 +74,7 @@ const ChatPage: React.FC<ChatPageProps> = ({}) => {
 					ref={chatRef}
 					className='bg-gray-50 flex-grow border-b-2 py-4 px-3 overflow-auto min-h-[20vh] w-full'>
 					{messagesFetching && (
-						<div className='text-center py-4'>
+						<div className='flex justify-center py-4'>
 							<Loader />
 						</div>
 					)}

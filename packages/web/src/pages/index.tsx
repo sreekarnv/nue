@@ -24,7 +24,7 @@ const HomePage: NextPage = ({}) => {
 
 	return (
 		<>
-			<Seo />
+			<Seo title={'Home'} />
 			<div className='max-w-xl mx-auto mt-10 md:mt-24 px-4 md:px-0'>
 				<Tabs.Root defaultValue='login'>
 					<Tabs.List
