@@ -19,6 +19,7 @@
     "@graphql-yoga/node": "^2.13.13",
     "@typegoose/typegoose": "^9.12.0",
     "argon2": "^0.29.1",
+    "axios": "^0.27.2",
     "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",

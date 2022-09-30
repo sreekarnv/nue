@@ -32,6 +32,8 @@ export class LoginUserInputType {
 }
 
 @pre<User>('save', async function (next) {
+	if (this.loginType !== 'local') return next();
+
 	if (!this.isModified('password') && !this.isNew) return next();
 
 	this.password = await argon2.hash(this.password, { saltLength: 14 });
@@ -56,6 +58,11 @@ export class User {
 	})
 	name!: string;
 
+	@Property({
+		default: 'local',
+	})
+	loginType!: string;
+
 	@Field()
 	@Property({
 		required: [true, 'Please provide your email'],
@@ -66,7 +73,6 @@ export class User {
 	email!: string;
 
 	@Property({
-		required: [true, 'Please provide your password'],
 		minlength: 8,
 		select: false,
 	})
@@ -74,7 +80,6 @@ export class User {
 
 	@Property({
 		select: false,
-		required: [true, 'Please confirm your password'],
 		validate: {
 			validator: function (this: User, el: string) {
 				return el === this.password;
@@ -82,6 +87,10 @@ export class User {
 		},
 	})
 	passwordConfirm!: string;
+
+	@Field({ nullable: true })
+	@Property({})
+	photo?: string;
 
 	@Field()
 	readonly createdAt!: Date;

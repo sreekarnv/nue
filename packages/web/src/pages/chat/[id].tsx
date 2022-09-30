@@ -9,6 +9,7 @@ import { withUrql } from '../../lib/urql';
 interface ChatPageProps {}
 
 const ChatPage: React.FC<ChatPageProps> = ({}) => {
+	const chatRef = React.useRef<HTMLDivElement>(null);
 	const router = useRouter();
 
 	const [{ fetching: messagesFetching, data: messagesData }] = useMessagesQuery(
@@ -18,6 +19,15 @@ const ChatPage: React.FC<ChatPageProps> = ({}) => {
 			},
 		}
 	);
+
+	const scrollToNewMessages = () => {
+		if (chatRef.current)
+			chatRef.current.scrollTop = chatRef.current.scrollHeight;
+	};
+
+	React.useEffect(() => {
+		scrollToNewMessages();
+	}, [messagesData]);
 
 	return (
 		<>
@@ -32,13 +42,17 @@ const ChatPage: React.FC<ChatPageProps> = ({}) => {
 						</div>
 					</>
 				}>
-				{messagesFetching && <p className='text-center py-4'>Loading...</p>}
+				<main
+					ref={chatRef}
+					className='bg-gray-50 flex-grow border-b-2 py-4 px-3 overflow-auto min-h-[20vh]'>
+					{messagesFetching && <p className='text-center py-4'>Loading...</p>}
 
-				<ul>
-					{messagesData?.messages?.map((message) => (
-						<MessageItem key={message._id} message={message as any} />
-					))}
-				</ul>
+					<ul>
+						{messagesData?.messages?.map((message) => (
+							<MessageItem key={message._id} message={message as any} />
+						))}
+					</ul>
+				</main>
 			</ChatLayout>
 		</>
 	);

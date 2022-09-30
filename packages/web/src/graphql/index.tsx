@@ -36,6 +36,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addMessage: Message;
   login: User;
+  loginWithGithub: User;
   logout?: Maybe<Scalars['Boolean']>;
   signup: User;
 };
@@ -49,6 +50,11 @@ export type MutationAddMessageArgs = {
 
 export type MutationLoginArgs = {
   input: LoginUserInputType;
+};
+
+
+export type MutationLoginWithGithubArgs = {
+  code: Scalars['String'];
 };
 
 
@@ -92,6 +98,7 @@ export type User = {
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   name: Scalars['String'];
+  photo?: Maybe<Scalars['String']>;
   updated: Scalars['DateTime'];
 };
 
@@ -102,6 +109,13 @@ export type AddMessageMutationVariables = Exact<{
 
 
 export type AddMessageMutation = { __typename?: 'Mutation', addMessage: { __typename: 'Message', _id: string, text: string, createdAt: any, sender: { __typename?: 'User', _id: string }, receiver: { __typename?: 'User', _id: string } } };
+
+export type GithubLoginMutationVariables = Exact<{
+  code: Scalars['String'];
+}>;
+
+
+export type GithubLoginMutation = { __typename?: 'Mutation', user: { __typename: 'User', _id: string, name: string, email: string, photo?: string | null } };
 
 export type LoginUserMutationVariables = Exact<{
   input: LoginUserInputType;
@@ -164,6 +178,21 @@ export const AddMessageDocument = gql`
 
 export function useAddMessageMutation() {
   return Urql.useMutation<AddMessageMutation, AddMessageMutationVariables>(AddMessageDocument);
+};
+export const GithubLoginDocument = gql`
+    mutation GithubLogin($code: String!) {
+  user: loginWithGithub(code: $code) {
+    _id
+    name
+    email
+    photo
+    __typename
+  }
+}
+    `;
+
+export function useGithubLoginMutation() {
+  return Urql.useMutation<GithubLoginMutation, GithubLoginMutationVariables>(GithubLoginDocument);
 };
 export const LoginUserDocument = gql`
     mutation LoginUser($input: LoginUserInputType!) {

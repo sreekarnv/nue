@@ -1,0 +1,8 @@
+mutation GithubLogin($code: String!) {
+	user: loginWithGithub(code: $code) {
+		_id
+		name
+		email
+		__typename
+	}
+}

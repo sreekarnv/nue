@@ -36,16 +36,13 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 	const [{ data: subData }] = useNewMessageSubscription({});
 
 	React.useEffect(() => {
-		console.log('data', subData);
 		if ((subData as any)?.message) {
 			if (subData?.message._id !== currentMessage?._id) {
-				console.log('HERE');
-
 				playSound();
 				setCurrentMessage(subData?.message as any);
 			}
 		}
-	}, [subData, currentMessage, router.query.id]);
+	}, [subData, currentMessage]);
 
 	const [{}, logout] = useLogoutUserMutation();
 	const [{ data: usersData }] = useAllUsersQuery();
@@ -85,13 +82,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 								<>{header}</>
 							</header>
 						)}
-						{true && (
-							<>
-								<main className='bg-gray-50 flex-grow border-b-2 py-4 px-3 overflow-auto min-h-[20vh]'>
-									{children}
-								</main>
-							</>
-						)}
+						{true && <>{children}</>}
 						{router.query.id && (
 							<footer>
 								<form

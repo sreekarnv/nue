@@ -54,7 +54,7 @@ app.use(
 		context: ({ req, res }) => ({ req, res }),
 	});
 
-	app.get('/', (req, res) => {
+	app.get('/', (_, res) => {
 		res.redirect('/graphql');
 	});
 

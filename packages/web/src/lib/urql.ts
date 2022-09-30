@@ -74,6 +74,19 @@ export const createUrqlClient = (
 								}
 							);
 						},
+						loginWithGithub: (result, _, cache) => {
+							cache.updateQuery(
+								{
+									query: LoggedInUserDocument,
+								},
+								() => {
+									return {
+										user: result.user,
+										__typename: 'Query',
+									};
+								}
+							);
+						},
 						signup: (result, _, cache) => {
 							cache.updateQuery(
 								{

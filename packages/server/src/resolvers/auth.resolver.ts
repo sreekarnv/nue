@@ -1,3 +1,5 @@
+import { GraphQLYogaError } from '@graphql-yoga/node';
+import axios from 'axios';
 import { Resolver, Query, Mutation, Arg, Ctx } from 'type-graphql';
 import UserModel, {
 	LoginUserInputType,
@@ -44,8 +46,56 @@ export class AuthResolver {
 			email,
 		}).select('+password');
 
-		if (!user || !(await user.verifyPassword(user.password, password))) {
-			throw new Error('User not found');
+		if (
+			!user ||
+			!(user?.password && (await user.verifyPassword(user.password, password)))
+		) {
+			throw new GraphQLYogaError('Invalid Credentials.');
+		}
+
+		req.session.userId = user._id;
+
+		return user;
+	}
+
+	@Mutation(() => User)
+	async loginWithGithub(@Ctx() { req }: Context, @Arg('code') code: string) {
+		const accessTokenRes = await axios({
+			url: `https://github.com/login/oauth/access_token`,
+			method: 'POST',
+			data: {
+				client_id: process.env.GITHUB_CLIENT_ID,
+				client_secret: process.env.GITHUB_CLIENT_SECRET,
+				code,
+			},
+		});
+
+		const accessToken = accessTokenRes.data.split('&')[0].split('=')[1];
+
+		const userRes = await axios({
+			url: `https://api.github.com/user`,
+			method: 'GET',
+			headers: {
+				Authorization: `token ${accessToken}`,
+				'Content-Type': 'application/json',
+			},
+		});
+
+		const { email, name, avatar_url } = userRes.data;
+
+		if (!email) {
+			throw new GraphQLYogaError("Please enable your email's visibility");
+		}
+
+		let user = await UserModel.findOne({ email });
+
+		if (!user) {
+			user = await UserModel.create({
+				name,
+				email,
+				photo: avatar_url,
+				loginType: 'github',
+			});
 		}
 
 		req.session.userId = user._id;
