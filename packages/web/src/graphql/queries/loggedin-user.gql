@@ -3,6 +3,7 @@ query LoggedInUser {
 		_id
 		name
 		email
+		photo
 		__typename
 	}
 }

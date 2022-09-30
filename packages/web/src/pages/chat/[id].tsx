@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import MessageItem from '../../components/chat/MessageItem';
+import Seo from '../../components/shared/Seo';
 import Avatar from '../../components/shared/ui/Avatar';
-import { useMessagesQuery, useNewMessageSubscription } from '../../graphql';
+import { useMessagesQuery } from '../../graphql';
 import ChatLayout from '../../layouts/ChatLayout';
 import { withUrql } from '../../lib/urql';
 
@@ -31,11 +32,15 @@ const ChatPage: React.FC<ChatPageProps> = ({}) => {
 
 	return (
 		<>
+			<Seo title={`${messagesData?.receiver.name} | Chat`} />
 			<ChatLayout
 				header={
 					<>
 						<div className='flex items-center gap-x-5'>
-							<Avatar />
+							<Avatar
+								src={messagesData?.receiver.photo || ''}
+								alt={messagesData?.receiver.name || ''}
+							/>
 							<h3 className='text-xl font-bold'>
 								{messagesData?.receiver.name}
 							</h3>
@@ -58,4 +63,4 @@ const ChatPage: React.FC<ChatPageProps> = ({}) => {
 	);
 };
 
-export default withUrql({})(ChatPage);
+export default withUrql({ ssr: true })(ChatPage);

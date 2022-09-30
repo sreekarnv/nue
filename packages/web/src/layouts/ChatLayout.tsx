@@ -60,7 +60,10 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 					<div className='basis-[20%]'>
 						<header className='border-b-2 py-4 px-3 flex items-center justify-between'>
 							<div className='flex items-center gap-x-3'>
-								<Avatar />
+								<Avatar
+									src={data?.user?.photo || ''}
+									alt={data?.user?.name || ''}
+								/>
 								<span className='font-semibold line-3'>{data?.user?.name}</span>
 							</div>
 							<button

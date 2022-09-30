@@ -2,6 +2,7 @@ query AllUsers {
 	users {
 		_id
 		name
+		photo
 		__typename
 	}
 }

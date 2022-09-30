@@ -2,6 +2,7 @@ query Messages($user: String!) {
 	receiver: user(_id: $user) {
 		_id
 		name
+		photo
 		__typename
 	}
 	messages(user: $user) {

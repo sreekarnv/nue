@@ -115,14 +115,14 @@ export type GithubLoginMutationVariables = Exact<{
 }>;
 
 
-export type GithubLoginMutation = { __typename?: 'Mutation', user: { __typename: 'User', _id: string, name: string, email: string, photo?: string | null } };
+export type GithubLoginMutation = { __typename?: 'Mutation', user: { __typename: 'User', _id: string, name: string, photo?: string | null, email: string } };
 
 export type LoginUserMutationVariables = Exact<{
   input: LoginUserInputType;
 }>;
 
 
-export type LoginUserMutation = { __typename?: 'Mutation', user: { __typename: 'User', _id: string, name: string, email: string } };
+export type LoginUserMutation = { __typename?: 'Mutation', user: { __typename: 'User', _id: string, name: string, photo?: string | null, email: string } };
 
 export type LogoutUserMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -134,24 +134,24 @@ export type SignupUserMutationVariables = Exact<{
 }>;
 
 
-export type SignupUserMutation = { __typename?: 'Mutation', user: { __typename: 'User', _id: string, name: string, email: string } };
+export type SignupUserMutation = { __typename?: 'Mutation', user: { __typename: 'User', _id: string, name: string, email: string, photo?: string | null } };
 
 export type LoggedInUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LoggedInUserQuery = { __typename?: 'Query', user?: { __typename: 'User', _id: string, name: string, email: string } | null };
+export type LoggedInUserQuery = { __typename?: 'Query', user?: { __typename: 'User', _id: string, name: string, email: string, photo?: string | null } | null };
 
 export type MessagesQueryVariables = Exact<{
   user: Scalars['String'];
 }>;
 
 
-export type MessagesQuery = { __typename?: 'Query', receiver: { __typename: 'User', _id: string, name: string }, messages: Array<{ __typename: 'Message', _id: string, text: string, createdAt: any, sender: { __typename?: 'User', _id: string }, receiver: { __typename?: 'User', _id: string } }> };
+export type MessagesQuery = { __typename?: 'Query', receiver: { __typename: 'User', _id: string, name: string, photo?: string | null }, messages: Array<{ __typename: 'Message', _id: string, text: string, createdAt: any, sender: { __typename?: 'User', _id: string }, receiver: { __typename?: 'User', _id: string } }> };
 
 export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllUsersQuery = { __typename?: 'Query', users: Array<{ __typename: 'User', _id: string, name: string }> };
+export type AllUsersQuery = { __typename?: 'Query', users: Array<{ __typename: 'User', _id: string, name: string, photo?: string | null }> };
 
 export type NewMessageSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -184,8 +184,8 @@ export const GithubLoginDocument = gql`
   user: loginWithGithub(code: $code) {
     _id
     name
-    email
     photo
+    email
     __typename
   }
 }
@@ -199,6 +199,7 @@ export const LoginUserDocument = gql`
   user: login(input: $input) {
     _id
     name
+    photo
     email
     __typename
   }
@@ -223,6 +224,7 @@ export const SignupUserDocument = gql`
     _id
     name
     email
+    photo
     __typename
   }
 }
@@ -237,6 +239,7 @@ export const LoggedInUserDocument = gql`
     _id
     name
     email
+    photo
     __typename
   }
 }
@@ -250,6 +253,7 @@ export const MessagesDocument = gql`
   receiver: user(_id: $user) {
     _id
     name
+    photo
     __typename
   }
   messages(user: $user) {
@@ -275,6 +279,7 @@ export const AllUsersDocument = gql`
   users {
     _id
     name
+    photo
     __typename
   }
 }

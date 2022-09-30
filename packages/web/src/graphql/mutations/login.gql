@@ -2,6 +2,7 @@ mutation LoginUser($input: LoginUserInputType!) {
 	user: login(input: $input) {
 		_id
 		name
+		photo
 		email
 		__typename
 	}

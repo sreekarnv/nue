@@ -3,6 +3,7 @@ mutation SignupUser($input: SignupUserInputType!) {
 		_id
 		name
 		email
+		photo
 		__typename
 	}
 }
