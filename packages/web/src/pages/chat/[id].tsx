@@ -49,8 +49,8 @@ const ChatPage: React.FC<ChatPageProps> = ({}) => {
 						<div className='flex items-center justify-between'>
 							<div className='flex items-center gap-x-2 md:gap-x-5'>
 								<Avatar
-									src={messagesData?.receiver.photo || ''}
-									alt={messagesData?.receiver.name || ''}
+									src={messagesData?.receiver.photo as string}
+									alt={messagesData?.receiver.name as string}
 								/>
 								<h3 className='text-lg md:text-xl font-bold'>
 									<span className='hidden md:block'>

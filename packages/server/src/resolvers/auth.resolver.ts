@@ -124,6 +124,6 @@ export class AuthResolver {
 
 	@Query(() => User)
 	async user(@Arg('_id') _id: string) {
-		return await UserModel.findById(_id).select('_id name');
+		return await UserModel.findById(_id).select('_id name photo');
 	}
 }
