@@ -1,6 +1,6 @@
 import { GraphQLYogaError } from '@graphql-yoga/node';
 import axios from 'axios';
-import { Resolver, Query, Mutation, Arg, Ctx } from 'type-graphql';
+import { Resolver, Query, Mutation, Arg, Ctx, Authorized } from 'type-graphql';
 import UserModel, {
 	LoginUserInputType,
 	SignupUserInputType,
@@ -117,11 +117,13 @@ export class AuthResolver {
 		return true;
 	}
 
+	@Authorized()
 	@Query(() => [User])
 	async users(@Ctx() { req }: Context) {
 		return await UserModel.find({ _id: { $ne: req.session.userId } });
 	}
 
+	@Authorized()
 	@Query(() => User)
 	async user(@Arg('_id') _id: string) {
 		return await UserModel.findById(_id).select('_id name photo');

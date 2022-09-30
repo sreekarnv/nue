@@ -14,6 +14,7 @@ import path from 'path';
 import xss from 'xss-clean';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
+import { authChecker } from './middleware/auth';
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
@@ -64,6 +65,7 @@ app.use(
 		schema: await buildSchema({
 			resolvers: [MessageResolver, AuthResolver],
 			validate: false,
+			authChecker,
 		}),
 		context: ({ req, res }) => ({ req, res }),
 	});

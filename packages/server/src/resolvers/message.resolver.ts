@@ -8,12 +8,14 @@ import {
 	PubSubEngine,
 	Root,
 	Ctx,
+	Authorized,
 } from 'type-graphql';
 import MessageModel, { Message } from '../models/message.model';
 import { Context } from '../types';
 
 @Resolver()
 export class MessageResolver {
+	@Authorized()
 	@Query(() => [Message])
 	async messages(
 		@Ctx() { req }: Context,
@@ -37,6 +39,7 @@ export class MessageResolver {
 		});
 	}
 
+	@Authorized()
 	@Subscription({
 		topics: 'messageAdded',
 		filter: ({ context, payload }) => {
@@ -51,6 +54,7 @@ export class MessageResolver {
 		return message;
 	}
 
+	@Authorized()
 	@Mutation(() => Message)
 	async addMessage(
 		@Ctx() { req }: Context,
