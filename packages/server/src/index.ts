@@ -41,18 +41,15 @@ app.use(
 	})
 );
 
-app.use((req) =>
+app.use(
 	session({
 		store: MongoStore.create({ mongoUrl: process.env.MONGO_URI! }),
 		secret: process.env.SESSION_SECRET!,
 		cookie: {
 			httpOnly: true,
-			secure:
-				process.env.NODE_ENV === 'production'
-					? req.secure || req.headers['x-forwarded-proto'] === 'https'
-					: false,
 			maxAge: 1000 * 60 * 60 * 24 * 7,
 			sameSite: 'none',
+			secure: process.env.NODE_ENV === 'production',
 		},
 		name: 'auth.token',
 		saveUninitialized: false,
