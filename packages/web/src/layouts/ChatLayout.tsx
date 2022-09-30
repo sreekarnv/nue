@@ -19,12 +19,14 @@ interface ChatLayoutProps {
 	header?: React.ReactNode;
 	showSidebar?: boolean;
 	toggleSidebar?: () => void;
+	sidebarWidth?: string;
 }
 
 const ChatLayout: React.FC<ChatLayoutProps> = ({
 	children,
 	showSidebar,
 	toggleSidebar,
+	sidebarWidth = 'w-70%',
 	header = <></>,
 }) => {
 	const router = useRouter();
@@ -74,9 +76,10 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 				<div className='bg-white rounded overflow-hidden w-[100vw] h-[100vh] xl:w-[80vw] xl:h-[80vh] flex shadow-lg'>
 					<div
 						className={clsx(
-							'fixed z-20 h-full bg-white w-[70%] md:translate-x-0 md:static md:block basis-[40%] xl:basis-[20%]',
+							`fixed z-20 h-full bg-white md:translate-x-0 md:static md:block basis-[40%] xl:basis-[20%]`,
 							showSidebar ? 'translate-x-0' : 'translate-x-[-100vw]',
-							'transition-transform duration-300 ease-out'
+							'transition-transform duration-300 ease-out',
+							sidebarWidth
 						)}>
 						<header className='border-b-2 py-4 px-3 flex items-center justify-between'>
 							<div className='flex items-center gap-x-3'>

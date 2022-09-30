@@ -23,7 +23,7 @@ const LoginWithGithub: React.FC<LoginWithGithubProps> = ({}) => {
 					.env.NEXT_PUBLIC_GITHUB_CLIENT_ID!}`}
 				onCode={onCode}
 				onClose={() => {}}>
-				<button className={clsx(['btn btn-primary', fetching && 'loading'])}>
+				<button className={clsx(['btn', fetching && 'loading'])}>
 					<BsGithub size={22} />
 					<span className='ml-3'>Continue with Github</span>
 				</button>
