@@ -56,6 +56,7 @@ export const createUrqlClient = (
 								},
 								() => {
 									return {
+										...cachedMessagesData,
 										messages: [...cachedMessagesData.messages, result.message],
 									};
 								}

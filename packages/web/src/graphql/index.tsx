@@ -108,7 +108,7 @@ export type AddMessageMutationVariables = Exact<{
 }>;
 
 
-export type AddMessageMutation = { __typename?: 'Mutation', addMessage: { __typename: 'Message', _id: string, text: string, createdAt: any, sender: { __typename?: 'User', _id: string, name: string }, receiver: { __typename?: 'User', _id: string, name: string } } };
+export type AddMessageMutation = { __typename?: 'Mutation', addMessage: { __typename: 'Message', _id: string, text: string, createdAt: any, sender: { __typename?: 'User', _id: string }, receiver: { __typename?: 'User', _id: string } } };
 
 export type GithubLoginMutationVariables = Exact<{
   code: Scalars['String'];
@@ -146,7 +146,7 @@ export type MessagesQueryVariables = Exact<{
 }>;
 
 
-export type MessagesQuery = { __typename?: 'Query', receiver: { __typename: 'User', _id: string, name: string, photo?: string | null }, messages: Array<{ __typename: 'Message', _id: string, text: string, createdAt: any, sender: { __typename?: 'User', _id: string, name: string }, receiver: { __typename?: 'User', _id: string, name: string } }> };
+export type MessagesQuery = { __typename?: 'Query', receiver: { __typename: 'User', _id: string, name: string, photo?: string | null }, messages: Array<{ __typename: 'Message', _id: string, text: string, createdAt: any, sender: { __typename?: 'User', _id: string }, receiver: { __typename?: 'User', _id: string } }> };
 
 export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -165,11 +165,9 @@ export const AddMessageDocument = gql`
     _id
     sender {
       _id
-      name
     }
     receiver {
       _id
-      name
     }
     text
     createdAt
@@ -262,11 +260,9 @@ export const MessagesDocument = gql`
     _id
     sender {
       _id
-      name
     }
     receiver {
       _id
-      name
     }
     text
     createdAt
