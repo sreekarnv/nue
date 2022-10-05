@@ -9,9 +9,11 @@ query Messages($user: String!) {
 		_id
 		sender {
 			_id
+			name
 		}
 		receiver {
 			_id
+			name
 		}
 		text
 		createdAt
