@@ -59,6 +59,12 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 	const messageRef = React.useRef<HTMLInputElement>(null);
 	const [message, setMessage] = React.useState('');
 
+	React.useEffect(() => {
+		if (!data?.user?._id) {
+			router.replace('/');
+		}
+	}, [data, router]);
+
 	return (
 		<>
 			{showSidebar && (

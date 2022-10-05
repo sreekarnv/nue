@@ -9,14 +9,21 @@ import {
 	User,
 } from '../graphql';
 
+import { Client, createClient as createWSClient } from 'graphql-ws';
+
 export const createUrqlClient = (
 	ssrExchange: SSRExchange,
 	ctx?: NextPageContext
 ): any => {
 	let headers;
+	let wsClient: Client;
 
 	if (typeof window === 'undefined') {
 		headers = ctx?.req?.headers;
+	} else {
+		wsClient = createWSClient({
+			url: process.env.NEXT_PUBLIC_SOCKET_URL!,
+		});
 	}
 
 	return {
@@ -128,36 +135,11 @@ export const createUrqlClient = (
 			ssrExchange,
 			fetchExchange,
 			subscriptionExchange({
-				forwardSubscription(operation) {
-					const url = new URL('http://localhost:4000/graphql');
-					url.searchParams.append('query', operation.query);
-					if (operation.variables) {
-						url.searchParams.append(
-							'variables',
-							JSON.stringify(operation.variables)
-						);
-					}
-					return {
-						subscribe(sink) {
-							const eventsource = new EventSource(url.toString(), {
-								withCredentials: true,
-							});
-							eventsource.onmessage = (event) => {
-								const data = JSON.parse(event.data);
-								sink.next(data);
-								if (eventsource.readyState === 2) {
-									sink.complete();
-								}
-							};
-							eventsource.onerror = (error) => {
-								sink.error(error);
-							};
-							return {
-								unsubscribe: () => eventsource.close(),
-							};
-						},
-					};
-				},
+				forwardSubscription: (operation) => ({
+					subscribe: (sink) => ({
+						unsubscribe: wsClient.subscribe(operation, sink),
+					}),
+				}),
 			}),
 		],
 	};
