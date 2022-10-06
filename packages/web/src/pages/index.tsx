@@ -8,7 +8,9 @@ import LoginForm from '../components/auth/LoginForm';
 import SignupForm from '../components/auth/SignupForm';
 import LoginWithGithub from '../components/auth/LoginWithGithub';
 import Seo from '../components/shared/Seo';
+import { ToastProvider } from '@radix-ui/react-toast';
 import Loader from '../components/shared/ui/Loader';
+import Toast from '../components/shared/ui/Toast';
 
 const HomePage: NextPage = ({}) => {
 	const router = useRouter();
@@ -25,6 +27,7 @@ const HomePage: NextPage = ({}) => {
 	return (
 		<>
 			<Seo title={'Home'} />
+
 			<div className='max-w-xl mx-auto mt-10 md:mt-24 px-4 md:px-0'>
 				<Tabs.Root defaultValue='login'>
 					<Tabs.List

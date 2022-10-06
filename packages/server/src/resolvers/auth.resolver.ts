@@ -23,16 +23,24 @@ export class AuthResolver {
 
 	@Mutation(() => User)
 	async signup(@Arg('input') input: SignupUserInputType) {
-		const { email, name, password, passwordConfirm } = input;
+		try {
+			const { email, name, password, passwordConfirm } = input;
 
-		const user = await UserModel.create({
-			email,
-			name,
-			password,
-			passwordConfirm,
-		});
+			const user = await UserModel.create({
+				email,
+				name,
+				password,
+				passwordConfirm,
+			});
 
-		return user;
+			return user;
+		} catch (err) {
+			if ((err as any).code === 11000) {
+				throw new GraphQLYogaError('User with this email already exists');
+			}
+
+			return err;
+		}
 	}
 
 	@Mutation(() => User)
@@ -40,22 +48,28 @@ export class AuthResolver {
 		@Ctx() { req }: Context,
 		@Arg('input') input: LoginUserInputType
 	) {
-		const { email, password } = input;
+		try {
+			const { email, password } = input;
 
-		const user = await UserModel.findOne({
-			email,
-		}).select('+password');
+			const user = await UserModel.findOne({
+				email,
+			}).select('+password');
 
-		if (
-			!user ||
-			!(user?.password && (await user.verifyPassword(user.password, password)))
-		) {
-			throw new GraphQLYogaError('Invalid Credentials.');
+			if (
+				!user ||
+				!(
+					user?.password && (await user.verifyPassword(user.password, password))
+				)
+			) {
+				throw new GraphQLYogaError('Invalid Credentials.');
+			}
+
+			req.session.userId = user._id;
+
+			return user;
+		} catch (err) {
+			return err;
 		}
-
-		req.session.userId = user._id;
-
-		return user;
 	}
 
 	@Mutation(() => User)

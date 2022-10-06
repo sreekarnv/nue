@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useLoginUserMutation } from '../../graphql';
 import * as Yup from 'yup';
 import FormInput from '../shared/FormInput';
+import { ToastProvider } from '@radix-ui/react-toast';
+import Toast from '../shared/ui/Toast';
 
 interface LoginFormProps {}
 
@@ -29,10 +31,16 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 		resolver: yupResolver(loginSchema),
 	});
 
-	const [{ fetching: fetchingLogin }, loginUser] = useLoginUserMutation();
+	const [{ fetching: fetchingLogin, error }, loginUser] =
+		useLoginUserMutation();
 
 	return (
 		<>
+			{error && (
+				<ToastProvider swipeDirection='up'>
+					<Toast variant='error' message={error.graphQLErrors[0].message} />
+				</ToastProvider>
+			)}
 			<form
 				autoComplete='off'
 				className='pt-10'

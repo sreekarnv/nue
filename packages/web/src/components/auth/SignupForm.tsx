@@ -1,9 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ToastProvider } from '@radix-ui/react-toast';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { useSignupUserMutation } from '../../graphql';
 import FormInput from '../shared/FormInput';
+import Toast from '../shared/ui/Toast';
 
 interface SignupFormProps {}
 
@@ -39,10 +41,16 @@ const SignupForm: React.FC<SignupFormProps> = ({}) => {
 		resolver: yupResolver(signupSchema),
 	});
 
-	const [{ fetching: fetchingSignup }, signupUser] = useSignupUserMutation();
+	const [{ fetching: fetchingSignup, error }, signupUser] =
+		useSignupUserMutation();
 
 	return (
 		<>
+			{error && (
+				<ToastProvider swipeDirection='up'>
+					<Toast variant='error' message={error.graphQLErrors[0].message} />
+				</ToastProvider>
+			)}
 			<form
 				autoComplete='off'
 				onSubmit={handleSignupFormSubmit(async (data) => {

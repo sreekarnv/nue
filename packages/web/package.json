@@ -16,6 +16,7 @@
     "@hookform/resolvers": "^2.9.8",
     "@radix-ui/react-avatar": "^1.0.0",
     "@radix-ui/react-tabs": "^1.0.0",
+    "@radix-ui/react-toast": "^1.0.0",
     "@urql/exchange-graphcache": "^5.0.1",
     "clsx": "^1.2.1",
     "daisyui": "^2.31.0",
