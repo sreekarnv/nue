@@ -5,7 +5,11 @@ module.exports = {
 		fontFamily: {
 			sans: ['var(--font-family)'],
 		},
-		extend: {},
+		extend: {
+			colors: {
+				'primary-light': '#d4fade',
+			},
+		},
 	},
 	plugins: [require('daisyui')],
 };

@@ -4,6 +4,7 @@ import React from 'react';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { MdSend } from 'react-icons/md';
 import ChatListItem from '../components/chat/ChatListItem';
+import Footer from '../components/shared/Footer';
 import Avatar from '../components/shared/ui/Avatar';
 import {
 	Message,
@@ -78,8 +79,8 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 				/>
 			)}
 			<audio ref={audioRef} src={'/notification.wav'} />
-			<div className='h-screen  bg-gray-100 flex items-center justify-center'>
-				<div className='bg-white rounded overflow-hidden w-[100vw] h-[100vh] xl:w-[80vw] xl:h-[80vh] flex shadow-lg'>
+			<div className='h-screen  bg-primary-light flex items-center justify-center flex-col'>
+				<div className='bg-white rounded-3xl overflow-hidden w-[100vw] h-[100vh] xl:w-[80vw] xl:h-[80vh] flex shadow-lg md:mt-12'>
 					<div
 						className={clsx(
 							`fixed z-20 h-full bg-white md:translate-x-0 md:static md:block basis-[40%] xl:basis-[20%]`,
@@ -154,6 +155,8 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 						)}
 					</div>
 				</div>
+
+				<Footer />
 			</div>
 		</>
 	);

@@ -20,7 +20,7 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
 
 		return (
 			<>
-				<div className='mb-2'>
+				<div className='mb-1.5'>
 					<label htmlFor={name} className='label'>
 						{label} *
 					</label>

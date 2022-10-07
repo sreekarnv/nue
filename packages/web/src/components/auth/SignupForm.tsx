@@ -70,18 +70,22 @@ const SignupForm: React.FC<SignupFormProps> = ({}) => {
 					error={formSignupState.errors.email?.message}
 					{...registerSignup('email')}
 				/>
-				<FormInput
-					label='Password'
-					type='password'
-					error={formSignupState.errors.password?.message}
-					{...registerSignup('password')}
-				/>
-				<FormInput
-					label='Password Confirm'
-					type='password'
-					error={formSignupState.errors.passwordConfirm?.message}
-					{...registerSignup('passwordConfirm')}
-				/>
+
+				<div className='grid grid-cols-2 gap-x-3'>
+					<FormInput
+						label='Password'
+						type='password'
+						error={formSignupState.errors.password?.message}
+						{...registerSignup('password')}
+					/>
+					<FormInput
+						label='Confirm'
+						type='password'
+						error={formSignupState.errors.passwordConfirm?.message}
+						{...registerSignup('passwordConfirm')}
+					/>
+				</div>
+
 				<button
 					className={`btn btn-primary mt-4 ${fetchingSignup ? 'loading' : ''}`}>
 					Sign Up
