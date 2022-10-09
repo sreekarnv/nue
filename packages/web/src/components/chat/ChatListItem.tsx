@@ -1,10 +1,10 @@
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import Link from 'next/link';
 import React from 'react';
-import { User } from '../../graphql';
+import { hooks } from '@modules/graphql';
 
 interface ChatListItemProps {
-	user: Partial<User>;
+	user: Partial<hooks.User>;
 	onClick: () => void;
 }
 

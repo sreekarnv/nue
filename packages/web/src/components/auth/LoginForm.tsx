@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useLoginUserMutation } from '../../graphql';
+import { hooks } from '@modules/graphql';
 import * as Yup from 'yup';
 import FormInput from '../shared/FormInput';
 import { ToastProvider } from '@radix-ui/react-toast';
@@ -32,7 +32,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 	});
 
 	const [{ fetching: fetchingLogin, error }, loginUser] =
-		useLoginUserMutation();
+		hooks.useLoginUserMutation();
 
 	return (
 		<>

@@ -1,0 +1,27 @@
+{
+  "name": "@modules/graphql",
+  "version": "0.1.0",
+  "packageManager": "yarn@3.2.3",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "codegen": "graphql-codegen --config codegen.yml",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "2.12.1",
+    "@graphql-codegen/typescript": "2.7.3",
+    "@graphql-codegen/typescript-operations": "2.5.3",
+    "@graphql-codegen/typescript-urql": "^3.7.0",
+    "@types/node": "18.7.21",
+    "typescript": "4.8.3"
+  },
+  "dependencies": {
+    "@urql/exchange-graphcache": "^5.0.1",
+    "graphql": "^15.2.0",
+    "graphql-ws": "^5.11.2",
+    "next-urql": "^4.0.0",
+    "react-is": "^18.2.0",
+    "urql": "^3.0.3"
+  }
+}

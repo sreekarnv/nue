@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import * as Tabs from '@radix-ui/react-tabs';
 import { withUrql } from '../lib/urql';
 import React from 'react';
-import { useLoggedInUserQuery } from '../graphql';
+import { hooks } from '@modules/graphql';
 import { useRouter } from 'next/router';
 import LoginForm from '../components/auth/LoginForm';
 import SignupForm from '../components/auth/SignupForm';
@@ -14,7 +14,7 @@ import Image from 'next/image';
 
 const HomePage: NextPage = ({}) => {
 	const router = useRouter();
-	const [{ fetching: fetchingUser, data }] = useLoggedInUserQuery();
+	const [{ fetching: fetchingUser, data }] = hooks.useLoggedInUserQuery();
 
 	React.useEffect(() => {
 		if (data?.user) {

@@ -1,15 +1,16 @@
 import { cacheExchange } from '@urql/exchange-graphcache';
-import { dedupExchange, fetchExchange, subscriptionExchange } from 'urql';
+import {
+	dedupExchange,
+	Exchange,
+	fetchExchange,
+	subscriptionExchange,
+} from 'urql';
 import { SSRExchange, withUrqlClient, WithUrqlClientOptions } from 'next-urql';
 import { NextPageContext } from 'next';
-import {
-	LoggedInUserDocument,
-	Message,
-	MessagesDocument,
-	User,
-} from '../graphql';
-
 import { Client, createClient as createWSClient } from 'graphql-ws';
+import {
+	cacheExchangeUpdates,
+} from '@modules/graphql';
 
 export const createUrqlClient = (
 	ssrExchange: SSRExchange,
@@ -38,98 +39,16 @@ export const createUrqlClient = (
 				keys: {},
 				resolvers: {},
 				updates: {
-					Subscription: {
-						newMessage: (result, _, cache) => {
-							const sender: Partial<User> = (result?.message as any).sender;
-
-							const cachedMessagesData = (cache.readQuery({
-								query: MessagesDocument,
-								variables: { user: sender._id },
-							}) as { messages: Message[] }) || { messages: [] };
-
-							cache.updateQuery(
-								{
-									query: MessagesDocument,
-									variables: {
-										user: sender._id,
-									},
-								},
-								() => {
-									return {
-										...cachedMessagesData,
-										messages: [...cachedMessagesData.messages, result.message],
-									};
-								}
-							);
+					Mutation: {
+						...cacheExchangeUpdates.Mutation,
+						logout: () => {
+							if (typeof window !== 'undefined') {
+								window.location.href = '/';
+							}
 						},
 					},
-					Mutation: {
-						logout: () => {
-							if (window) window.location.href = '/';
-						},
-						login: (result, _, cache) => {
-							cache.updateQuery(
-								{
-									query: LoggedInUserDocument,
-								},
-								() => {
-									return {
-										user: result.user,
-										__typename: 'Query',
-									};
-								}
-							);
-						},
-						loginWithGithub: (result, _, cache) => {
-							cache.updateQuery(
-								{
-									query: LoggedInUserDocument,
-								},
-								() => {
-									return {
-										user: result.user,
-										__typename: 'Query',
-									};
-								}
-							);
-						},
-						signup: (result, _, cache) => {
-							cache.updateQuery(
-								{
-									query: LoggedInUserDocument,
-								},
-								() => {
-									return {
-										user: result.user,
-										__typename: 'Query',
-									};
-								}
-							);
-						},
-						addMessage: (result, _, cache) => {
-							const receiver: Partial<User> = (result.addMessage as any)
-								.receiver;
-
-							const res = cache.readQuery({
-								query: MessagesDocument,
-								variables: { user: receiver._id },
-							});
-
-							cache.updateQuery(
-								{
-									query: MessagesDocument,
-									variables: {
-										user: receiver._id,
-									},
-								},
-								() => {
-									return {
-										...res,
-										messages: [...(res as any).messages, result.addMessage],
-									};
-								}
-							);
-						},
+					Subscription: {
+						...cacheExchangeUpdates.Subscription,
 					},
 				},
 			}),

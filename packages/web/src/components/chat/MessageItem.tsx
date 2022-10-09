@@ -1,15 +1,15 @@
 import React from 'react';
-import { Message, useLoggedInUserQuery } from '../../graphql';
+import { hooks } from '@modules/graphql';
 import formatDistance from 'date-fns/formatDistance';
 import clsx from 'clsx';
 import Link from 'next/link';
 
 interface MessageItemProps {
-	message: Partial<Message>;
+	message: Partial<hooks.Message>;
 }
 
 const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
-	const [{ data }] = useLoggedInUserQuery();
+	const [{ data }] = hooks.useLoggedInUserQuery();
 	return (
 		<li
 			className={clsx([

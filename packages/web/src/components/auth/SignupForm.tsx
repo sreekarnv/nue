@@ -3,7 +3,7 @@ import { ToastProvider } from '@radix-ui/react-toast';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
-import { useSignupUserMutation } from '../../graphql';
+import { hooks } from '@modules/graphql';
 import FormInput from '../shared/FormInput';
 import Toast from '../shared/ui/Toast';
 
@@ -42,7 +42,7 @@ const SignupForm: React.FC<SignupFormProps> = ({}) => {
 	});
 
 	const [{ fetching: fetchingSignup, error }, signupUser] =
-		useSignupUserMutation();
+		hooks.useSignupUserMutation();
 
 	return (
 		<>

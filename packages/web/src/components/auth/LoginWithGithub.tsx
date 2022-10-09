@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGithubLoginMutation } from '../../graphql';
+import { hooks } from '@modules/graphql';
 import OauthPopup from 'react-oauth-popup';
 import clsx from 'clsx';
 import { BsGithub } from 'react-icons/bs';
@@ -7,7 +7,7 @@ import { BsGithub } from 'react-icons/bs';
 interface LoginWithGithubProps {}
 
 const LoginWithGithub: React.FC<LoginWithGithubProps> = ({}) => {
-	const [{ fetching }, loginWithGithub] = useGithubLoginMutation();
+	const [{ fetching }, loginWithGithub] = hooks.useGithubLoginMutation();
 
 	const onCode = async (code: string) => {
 		await loginWithGithub({ code });

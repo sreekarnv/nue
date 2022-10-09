@@ -3,7 +3,7 @@ import React from 'react';
 import MessageItem from '../../components/chat/MessageItem';
 import Seo from '../../components/shared/Seo';
 import Avatar from '../../components/shared/ui/Avatar';
-import { useMessagesQuery } from '../../graphql';
+import { hooks } from '@modules/graphql';
 import ChatLayout from '../../layouts/ChatLayout';
 import { withUrql } from '../../lib/urql';
 import { MdMenu } from 'react-icons/md';
@@ -21,13 +21,12 @@ const ChatPage: React.FC<ChatPageProps> = ({}) => {
 		setShowSidebar(!showSidebar);
 	};
 
-	const [{ fetching: messagesFetching, data: messagesData }] = useMessagesQuery(
-		{
+	const [{ fetching: messagesFetching, data: messagesData }] =
+		hooks.useMessagesQuery({
 			variables: {
 				user: router.query.id as string,
 			},
-		}
-	);
+		});
 
 	const scrollToNewMessages = () => {
 		if (chatRef.current)

@@ -6,14 +6,7 @@ import { MdSend } from 'react-icons/md';
 import ChatListItem from '../components/chat/ChatListItem';
 import Footer from '../components/shared/Footer';
 import Avatar from '../components/shared/ui/Avatar';
-import {
-	Message,
-	useAddMessageMutation,
-	useAllUsersQuery,
-	useLoggedInUserQuery,
-	useLogoutUserMutation,
-	useNewMessageSubscription,
-} from '../graphql';
+import { hooks } from '@modules/graphql';
 
 interface ChatLayoutProps {
 	children: React.ReactNode;
@@ -33,15 +26,14 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 	const router = useRouter();
 	const audioRef = React.useRef<HTMLAudioElement>(null);
 
-	const [currentMessage, setCurrentMessage] = React.useState<Message | null>(
-		null
-	);
+	const [currentMessage, setCurrentMessage] =
+		React.useState<hooks.Message | null>(null);
 
 	const playSound = () => {
 		audioRef.current?.play();
 	};
 
-	const [{ data: subData }] = useNewMessageSubscription({});
+	const [{ data: subData }] = hooks.useNewMessageSubscription({});
 
 	React.useEffect(() => {
 		if ((subData as any)?.message) {
@@ -52,10 +44,10 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
 		}
 	}, [subData, currentMessage]);
 
-	const [{}, logout] = useLogoutUserMutation();
-	const [{ data: usersData }] = useAllUsersQuery();
-	const [{}, addMessage] = useAddMessageMutation();
-	const [{ data }] = useLoggedInUserQuery();
+	const [{}, logout] = hooks.useLogoutUserMutation();
+	const [{ data: usersData }] = hooks.useAllUsersQuery();
+	const [{}, addMessage] = hooks.useAddMessageMutation();
+	const [{ data }] = hooks.useLoggedInUserQuery();
 
 	const messageRef = React.useRef<HTMLInputElement>(null);
 	const [message, setMessage] = React.useState('');
