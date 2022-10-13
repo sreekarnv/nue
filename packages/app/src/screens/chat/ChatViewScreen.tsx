@@ -29,8 +29,8 @@ const ChatViewScreen: React.FC<ChatViewScreenProps> = ({
 	}, [data, navigation]);
 
 	React.useEffect(() => {
-		if (data?.messages) {
-			const index = data?.messages.length === 0 ? 0 : data?.messages.length - 1;
+		if (data?.messages.length) {
+			const index = data?.messages.length <= 1 ? 1 : data?.messages.length - 1;
 			chatRef.current?.scrollToIndex({ index });
 		}
 	}, [data?.messages]);

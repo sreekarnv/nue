@@ -7,13 +7,14 @@ import {
 import { createClient as createWSClient } from 'graphql-ws';
 import { cacheExchangeUpdates, hooks } from '@modules/graphql';
 import { cacheExchange } from '@urql/exchange-graphcache';
+import Constants from 'expo-constants';
 
 const wsClient = createWSClient({
-	url: 'ws:///graphql',
+	url: Constants.manifest?.extra?.WS_URL,
 });
 
 export const urqlClient = createClient({
-	url: 'http:///graphql',
+	url: Constants.manifest?.extra?.API_URL,
 	fetchOptions: {
 		credentials: 'include',
 	},

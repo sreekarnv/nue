@@ -3,6 +3,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { Button, Input, Text } from '@rneui/themed';
 import { AuthScreenProp } from '../../navigation/AuthNavigator';
 import { hooks } from '@modules/graphql';
+import LoginWithGithub from '../../components/auth/LoginWithGithub';
 
 interface LoginScreenProps extends AuthScreenProp<'Login'> {}
 
@@ -36,6 +37,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 					</TouchableOpacity>
 				</View>
 			</View>
+
+			<LoginWithGithub />
 		</>
 	);
 };
