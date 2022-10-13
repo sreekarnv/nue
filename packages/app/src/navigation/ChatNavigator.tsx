@@ -31,6 +31,8 @@ const ChatStack = createNativeStackNavigator<ChatNavigatorParamList>();
 interface ChatNavigatorProps {}
 
 const ChatNavigator: React.FC<ChatNavigatorProps> = ({}) => {
+	hooks.useNewMessageSubscription({});
+
 	return (
 		<>
 			<ChatStack.Navigator
