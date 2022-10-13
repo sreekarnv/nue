@@ -9,11 +9,11 @@ import { cacheExchangeUpdates, hooks } from '@modules/graphql';
 import { cacheExchange } from '@urql/exchange-graphcache';
 
 const wsClient = createWSClient({
-	url: '',
+	url: 'ws:///graphql',
 });
 
 export const urqlClient = createClient({
-	url: '',
+	url: 'http:///graphql',
 	fetchOptions: {
 		credentials: 'include',
 	},

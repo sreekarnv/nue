@@ -15,6 +15,7 @@
     "@rneui/base": "^4.0.0-rc.6",
     "@rneui/themed": "^4.0.0-rc.6",
     "@urql/exchange-graphcache": "^5.0.1",
+    "date-fns": "^2.29.3",
     "expo": "~46.0.13",
     "expo-status-bar": "~1.4.0",
     "graphql": "^15.2.0",
