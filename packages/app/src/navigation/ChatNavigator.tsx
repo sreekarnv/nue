@@ -8,9 +8,11 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ChatListScreen from '../screens/chat/ChatListScreen';
+import ChatViewScreen from '../screens/chat/ChatViewScreen';
 
 export type ChatNavigatorParamList = {
 	List: undefined;
+	View: { _id: string };
 };
 
 export type ChatStackNavigationProp<T extends keyof ChatNavigatorParamList> =
@@ -55,6 +57,7 @@ const ChatNavigator: React.FC<ChatNavigatorProps> = ({}) => {
 					name='List'
 					component={ChatListScreen}
 				/>
+				<ChatStack.Screen name='View' component={ChatViewScreen} />
 			</ChatStack.Navigator>
 		</>
 	);
