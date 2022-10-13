@@ -8,9 +8,7 @@ import {
 import { SSRExchange, withUrqlClient, WithUrqlClientOptions } from 'next-urql';
 import { NextPageContext } from 'next';
 import { Client, createClient as createWSClient } from 'graphql-ws';
-import {
-	cacheExchangeUpdates,
-} from '@modules/graphql';
+import { cacheExchangeUpdates } from '@modules/graphql';
 
 export const createUrqlClient = (
 	ssrExchange: SSRExchange,
