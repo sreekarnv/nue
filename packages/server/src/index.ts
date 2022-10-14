@@ -38,14 +38,14 @@ app.use(
 	})
 );
 
-// app.use(
-// 	helmet({
-// 		hidePoweredBy: true,
-// 		crossOriginResourcePolicy: {
-// 			policy: 'cross-origin',
-// 		},
-// 	})
-// );
+app.use(
+	helmet({
+		hidePoweredBy: true,
+		crossOriginResourcePolicy: {
+			policy: 'cross-origin',
+		},
+	})
+);
 
 app.use(sessionMiddleware);
 
