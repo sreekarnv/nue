@@ -2,7 +2,7 @@ import { hooks } from '@modules/graphql';
 import { Button } from '@rneui/themed';
 import React from 'react';
 import { FlatList, TextInput, View } from 'react-native';
-import MessageItem from '../../components/MessageItem';
+import MessageItem from '../../components/chat/MessageItem';
 import { ChatScreenProp } from '../../navigation/ChatNavigator';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -13,6 +13,8 @@ const ChatViewScreen: React.FC<ChatViewScreenProps> = ({
 	navigation,
 }) => {
 	const chatRef = React.useRef<FlatList>(null);
+
+	const [message, setMessage] = React.useState('');
 
 	const [{ fetching: submitting }, addMessage] = hooks.useAddMessageMutation();
 
@@ -30,7 +32,7 @@ const ChatViewScreen: React.FC<ChatViewScreenProps> = ({
 
 	React.useEffect(() => {
 		if (data?.messages.length) {
-			const index = data?.messages.length <= 1 ? 1 : data?.messages.length - 1;
+			const index = data?.messages.length == 0 ? 1 : data?.messages.length - 1;
 			chatRef.current?.scrollToIndex({ index });
 		}
 	}, [data?.messages]);
@@ -63,6 +65,8 @@ const ChatViewScreen: React.FC<ChatViewScreenProps> = ({
 				}}>
 				<TextInput
 					placeholder='Type a message...'
+					value={message}
+					onChangeText={(text) => setMessage(text)}
 					style={{
 						backgroundColor: '#ddd',
 						flex: 1,
@@ -74,12 +78,18 @@ const ChatViewScreen: React.FC<ChatViewScreenProps> = ({
 				/>
 				<Button
 					loading={submitting}
-					onPress={() =>
-						addMessage({
+					onPress={async () => {
+						if (!message) {
+							return;
+						}
+
+						await addMessage({
 							receiver: route.params._id,
-							text: 'Hello',
-						})
-					}
+							text: message,
+						});
+
+						setMessage('');
+					}}
 					radius={10}
 					size='lg'
 					style={{

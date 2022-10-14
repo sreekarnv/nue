@@ -1,4 +1,4 @@
-import { Text } from '@rneui/themed';
+import { Text, useTheme } from '@rneui/themed';
 import React from 'react';
 import { View } from 'react-native';
 import formatDistance from 'date-fns/formatDistance';
@@ -10,6 +10,8 @@ interface MessageItemProps {
 }
 
 const MessageItem: React.FC<MessageItemProps> = ({ item, receiver }) => {
+	const { theme } = useTheme();
+
 	return (
 		<>
 			<View
@@ -17,7 +19,10 @@ const MessageItem: React.FC<MessageItemProps> = ({ item, receiver }) => {
 					borderRadius: 10,
 					paddingVertical: 15,
 					paddingHorizontal: 20,
-					backgroundColor: item.sender._id === receiver._id ? '#ccc' : 'green',
+					backgroundColor:
+						item.sender._id === receiver._id
+							? theme.colors.grey5
+							: theme.colors.primary,
 					margin: 15,
 					alignSelf:
 						item.sender._id === receiver._id ? 'flex-start' : 'flex-end',

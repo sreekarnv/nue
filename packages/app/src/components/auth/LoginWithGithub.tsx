@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
-import { Button } from 'react-native';
 import { hooks } from '@modules/graphql';
 import Constants from 'expo-constants';
+import { Button } from '@rneui/themed';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -36,6 +36,20 @@ export default function LoginWithGithub() {
 
 	return (
 		<Button
+			size='lg'
+			type='outline'
+			buttonStyle={{
+				borderColor: '#333',
+			}}
+			icon={{
+				name: 'github',
+				type: 'font-awesome',
+				color: '#333',
+				style: { marginRight: 10 },
+			}}
+			titleStyle={{
+				color: '#333',
+			}}
 			disabled={!request}
 			title='Login With Github'
 			onPress={() => {

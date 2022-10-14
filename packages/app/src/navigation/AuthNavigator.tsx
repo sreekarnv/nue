@@ -8,8 +8,10 @@ interface AuthNavigatorProps {}
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import SignupScreen from '../screens/auth/SignupScreen';
+import HomeScreen from '../screens/auth/HomeScreen';
 
 export type AuthNavigatorParamList = {
+	Home: undefined;
 	Login: undefined;
 	Signup: undefined;
 };
@@ -31,6 +33,11 @@ const AuthNavigator: React.FC<AuthNavigatorProps> = ({}) => {
 	return (
 		<SafeAreaProvider>
 			<AuthStack.Navigator>
+				<AuthStack.Screen
+					options={{ headerShown: false }}
+					name='Home'
+					component={HomeScreen}
+				/>
 				<AuthStack.Screen name='Login' component={LoginScreen} />
 				<AuthStack.Screen name='Signup' component={SignupScreen} />
 			</AuthStack.Navigator>
