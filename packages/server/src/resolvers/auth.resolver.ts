@@ -22,7 +22,10 @@ export class AuthResolver {
 	}
 
 	@Mutation(() => User)
-	async signup(@Arg('input') input: SignupUserInputType) {
+	async signup(
+		@Ctx() { req }: Context,
+		@Arg('input') input: SignupUserInputType
+	) {
 		try {
 			const { email, name, password, passwordConfirm } = input;
 
@@ -32,6 +35,8 @@ export class AuthResolver {
 				password,
 				passwordConfirm,
 			});
+
+			req.session.userId = user._id;
 
 			return user;
 		} catch (err) {

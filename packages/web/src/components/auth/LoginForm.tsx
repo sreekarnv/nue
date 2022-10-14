@@ -1,25 +1,11 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useLoginForm } from '@modules/form';
 import { hooks } from '@modules/graphql';
-import * as Yup from 'yup';
 import FormInput from '../shared/FormInput';
 import { ToastProvider } from '@radix-ui/react-toast';
 import Toast from '../shared/ui/Toast';
 
 interface LoginFormProps {}
-
-const loginSchema = Yup.object()
-	.shape({
-		email: Yup.string()
-			.required('User must provide their email')
-			.email('Please provide a valid email')
-			.trim(),
-		password: Yup.string()
-			.required('User must provide a password')
-			.min(6, 'Password must contain atleast 6 characters'),
-	})
-	.required();
 
 const LoginForm: React.FC<LoginFormProps> = ({}) => {
 	const {
@@ -27,9 +13,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 		handleSubmit: handleLoginFormSubmit,
 		reset: resetLoginForm,
 		formState: formLoginState,
-	} = useForm({
-		resolver: yupResolver(loginSchema),
-	});
+	} = useLoginForm();
 
 	const [{ fetching: fetchingLogin, error }, loginUser] =
 		hooks.useLoginUserMutation();
