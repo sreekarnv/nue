@@ -1,4 +1,4 @@
-import { GraphQLYogaError } from '@graphql-yoga/node';
+import { GraphQLError } from 'graphql';
 import axios from 'axios';
 import { Resolver, Query, Mutation, Arg, Ctx, Authorized } from 'type-graphql';
 import UserModel, {
@@ -41,7 +41,7 @@ export class AuthResolver {
 			return user;
 		} catch (err) {
 			if ((err as any).code === 11000) {
-				throw new GraphQLYogaError('User with this email already exists');
+				throw new GraphQLError('User with this email already exists');
 			}
 
 			return err;
@@ -66,7 +66,7 @@ export class AuthResolver {
 					user?.password && (await user.verifyPassword(user.password, password))
 				)
 			) {
-				throw new GraphQLYogaError('Invalid Credentials.');
+				throw new GraphQLError('Invalid Credentials.');
 			}
 
 			req.session.userId = user._id;
@@ -103,7 +103,7 @@ export class AuthResolver {
 		const { email, name, avatar_url } = userRes.data;
 
 		if (!email) {
-			throw new GraphQLYogaError("Please enable your email's visibility");
+			throw new GraphQLError("Please enable your email's visibility");
 		}
 
 		let user = await UserModel.findOne({ email });
