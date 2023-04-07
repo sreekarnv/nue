@@ -17,8 +17,8 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 	} = useSignupForm();
 	const [{ fetching }, signup] = hooks.useSignupUserMutation();
 
-	const onSubmit = (data: any) =>
-		signup({
+	const onSubmit = async (data: any) =>
+		await signup({
 			input: data,
 		});
 

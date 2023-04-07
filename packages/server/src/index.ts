@@ -71,7 +71,7 @@ app.use(sessionMiddleware);
 
 		const wsServer = new WebSocketServer({
 			server,
-			path: graphQLServer.graphqlEndpoint,
+			path: '/',
 		});
 
 		useServer(
