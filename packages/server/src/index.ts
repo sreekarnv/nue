@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import express from 'express';
-import { createServer } from '@graphql-yoga/node';
+import express, { Request, Response } from 'express';
+import { createYoga } from 'graphql-yoga';
 import { buildSchema } from 'type-graphql';
 import { MessageResolver } from './resolvers/message.resolver';
 import { AuthResolver } from './resolvers/auth.resolver';
@@ -38,14 +38,16 @@ app.use(
 	})
 );
 
-app.use(
-	helmet({
-		hidePoweredBy: true,
-		crossOriginResourcePolicy: {
-			policy: 'cross-origin',
-		},
-	})
-);
+if (process.env.NODE_ENV === 'production') {
+	app.use(
+		helmet({
+			hidePoweredBy: true,
+			crossOriginResourcePolicy: {
+				policy: 'cross-origin',
+			},
+		})
+	);
+}
 
 app.use(sessionMiddleware);
 
@@ -55,7 +57,7 @@ app.use(sessionMiddleware);
 		Session.index({ expires: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 7 });
 		mongoose.set('debug', true);
 
-		const graphQLServer = createServer({
+		const graphQLServer = createYoga<{ req: Request; res: Response }>({
 			schema: await buildSchema({
 				resolvers: [MessageResolver, AuthResolver],
 				validate: false,
@@ -69,7 +71,7 @@ app.use(sessionMiddleware);
 
 		const wsServer = new WebSocketServer({
 			server,
-			path: graphQLServer.getAddressInfo().endpoint,
+			path: '/',
 		});
 
 		useServer(
@@ -130,7 +132,7 @@ app.use(sessionMiddleware);
 			res.redirect('/graphql');
 		});
 
-		app.use('/graphql', graphQLServer);
+		app.use('/graphql', graphQLServer as any);
 
 		server.listen(PORT, () => {
 			console.log(`Server started on port ${PORT}`);
